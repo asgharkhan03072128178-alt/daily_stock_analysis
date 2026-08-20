@@ -1,0 +1,72 @@
+name: QQ SMTP 邮件测试
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/email-smoke-test.yml
+
+permissions:
+  contents: read
+
+jobs:
+  send-test-email:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
+
+    steps:
+      - name: 检查邮件配置
+        shell: bash
+        run: |
+          test -n "$EMAIL_SENDER" || { echo "缺少 EMAIL_SENDER"; exit 1; }
+          test -n "$EMAIL_PASSWORD" || { echo "缺少 EMAIL_PASSWORD"; exit 1; }
+          test -n "$EMAIL_RECEIVERS" || { echo "缺少 EMAIL_RECEIVERS"; exit 1; }
+
+      - name: 发送 QQ SMTP 测试邮件
+        shell: python
+        run: |
+          import os
+          import smtplib
+          import ssl
+          from datetime import datetime, timedelta, timezone
+          from email.message import EmailMessage
+
+          sender = os.environ["EMAIL_SENDER"].strip()
+          password = os.environ["EMAIL_PASSWORD"].strip()
+          receivers = [
+              item.strip()
+              for item in os.environ["EMAIL_RECEIVERS"].split(",")
+              if item.strip()
+          ]
+          if not receivers:
+              raise RuntimeError("EMAIL_RECEIVERS 中没有有效收件地址")
+
+          now = datetime.now(timezone(timedelta(hours=8)))
+          message = EmailMessage()
+          message["From"] = sender
+          message["To"] = ", ".join(receivers)
+          message["Subject"] = "QQ SMTP 配置测试成功"
+          message.set_content(
+              "QQ SMTP 邮件通道测试成功。\n\n"
+              f"发件邮箱：{sender}\n"
+              f"测试时间：{now:%Y-%m-%d %H:%M:%S}（北京时间）\n"
+              "后续可用于发送每日08:00盘前报告和18:00盘后复盘。\n"
+          )
+
+          context = ssl.create_default_context()
+          with smtplib.SMTP_SSL(
+              "smtp.qq.com",
+              465,
+              context=context,
+              timeout=30,
+          ) as smtp:
+              smtp.login(sender, password)
+              smtp.send_message(message)
+
+          print("QQ SMTP 测试邮件发送成功")
