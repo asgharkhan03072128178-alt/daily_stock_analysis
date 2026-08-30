@@ -1,0 +1,50 @@
+name: Send 2026-08-30 18 A-share game preflight
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/send-report-2026-08-30-pm-game.yml'
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    env:
+      EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
+      REPORT_B64: PCFkb2N0eXBlIGh0bWw+PGh0bWwgbGFuZz0iemgtQ04iPjxoZWFkPjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij48bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLGluaXRpYWwtc2NhbGU9MSI+PHRpdGxlPjIwMjYtMDgtMzAgMTg6MDAgQeiCoeaWsOa4uOaIj+i1m+WJjeWkjeebmDwvdGl0bGU+PHN0eWxlPmJvZHl7bWFyZ2luOjA7YmFja2dyb3VuZDojZjNmNmY4O2NvbG9yOiMxZjI5MzM7Zm9udDoxNXB4LzEuNyAtYXBwbGUtc3lzdGVtLEJsaW5rTWFjU3lzdGVtRm9udCwiU2Vnb2UgVUkiLCJNaWNyb3NvZnQgWWFIZWkiLHNhbnMtc2VyaWZ9Lnd7bWF4LXdpZHRoOjkwMHB4O21hcmdpbjoyMHB4IGF1dG87YmFja2dyb3VuZDp3aGl0ZTtwYWRkaW5nOjI2cHg7Ym9yZGVyLXJhZGl1czoxNHB4fWgxe2ZvbnQtc2l6ZToyNXB4O2NvbG9yOiMxNzM2NWQ7bWFyZ2luOjAgMCA4cHh9aDJ7Zm9udC1zaXplOjE4cHg7Y29sb3I6IzFmNGU3OTtib3JkZXItbGVmdDo0cHggc29saWQgIzJmNzViNTtwYWRkaW5nLWxlZnQ6OXB4O21hcmdpbi10b3A6MjVweH0ubWV0YSwuYm94LC53YXJue3BhZGRpbmc6MTJweCAxNHB4O2JvcmRlci1yYWRpdXM6OHB4O2JhY2tncm91bmQ6I2VkZjVmYn0ud2FybntiYWNrZ3JvdW5kOiNmZmY0ZTY7Ym9yZGVyLWxlZnQ6NHB4IHNvbGlkICNmMDhjMDB9dGFibGV7d2lkdGg6MTAwJTtib3JkZXItY29sbGFwc2U6Y29sbGFwc2U7Zm9udC1zaXplOjEzcHh9dGgsdGR7Ym9yZGVyOjFweCBzb2xpZCAjZDllMmVjO3BhZGRpbmc6OHB4O3ZlcnRpY2FsLWFsaWduOnRvcH10aHtiYWNrZ3JvdW5kOiNlYWYyZjg7dGV4dC1hbGlnbjpsZWZ0fS5va3tjb2xvcjojMDg3ZjVifS5iYWR7Y29sb3I6I2M5MmEyYX0uc21hbGx7Zm9udC1zaXplOjEycHg7Y29sb3I6IzY2NzA4NX1he2NvbG9yOiMxODY0YWJ9PC9zdHlsZT48L2hlYWQ+PGJvZHk+PGRpdiBjbGFzcz0idyI+CjxoMT7lkajml6UxODowMOi1m+WJjei1hOiur+WkjeebmO+8muaYjuaXqeWFiOeci1BNSe+8jOS4jemihOWIpOW8gOebmOetlOahiDwvaDE+CjxkaXYgY2xhc3M9Im1ldGEiPjxiPueglOeptuaXtuaute+8mjwvYj4yMDI2LTA4LTMwIDE3OjE14oCUMTg6MDDjgIA8Yj7mlbDmja7miKrmraLvvJo8L2I+MTg6MDDvvIjljJfkuqzml7bpl7TvvIk8YnI+PGI+54q25oCB77yaPC9iPuWRqOaXpeS8keW4gu+8m+aWsOKAnEHogqHpooTmtYvlrabkuaDmuLjmiI/igJ3oh6oyMDI2LTA4LTMx6LW35ZCv55So44CC5LuK5aSp5LiN55Sf5oiQMzDogqHmppzljZXjgIHkuI3opobnm5bmmI7ml6V3YXRjaGxpc3TjgIHkuI3lu7rnq4vku7vkvZXmqKHmi5/miJDkuqTjgII8L2Rpdj4KCjxoMj7kuIDjgIHku4rmmZrnu5Porro8L2gyPgo8ZGl2IGNsYXNzPSJ3YXJuIj48Yj7mmI7lpKnmnIDlpKfnmoTlt7Lnn6Xlj5jph4/mmK8wOTozMOWumOaWuVBNSeWSjOWNiuW5tOaKpeaKq+mcsuaIquatou+8jOS4jeaYr+afkOS4qumimOadkOWQjeensOOAgjwvYj4g5rW35aSW5pa56Z2i77yM576O6IGU5YKo5Li75bit5YGP6bmw6KGo5oCB5o6o5Yqo576O5YC65pS255uK546H5ZKM576O5YWD5LiK6KGM44CB56eR5oqA6IKh5om/5Y6L77yb6L+Z5o+Q6auYQeiCoemrmOS8sOWAvOaIkOmVv+adv+Wdl+eahOW8gOebmOazouWKqOmjjumZqeOAguaYjuaXqTA4OjAw5qac5Y2V5bqU5LyY5YWI6YCJ5oup5rWB5Yqo5oCn5aW944CB6LSi5oql5Y+v5qC46aqM55qE5Lit5aSn5biC5YC85YWs5Y+477yM5bm25a+56auY5byA6K6+572u5Lil5qC855qE5LiN6L+95Lu35p2h5Lu244CCPC9kaXY+Cgo8aDI+5LqM44CB5ZGo5pyr5paw5aKe5L+h5oGvPC9oMj4KPHRhYmxlPjx0cj48dGg+5LqL5a6ePC90aD48dGg+5Y+v6IO95b2x5ZON77yI5o6o5pat77yJPC90aD48dGg+5piO5pep6aqM6K+BPC90aD48L3RyPgo8dHI+PHRkPjjmnIgzMeaXpeWbveWutue7n+iuoeWxgOWwhuWPkeW4g+acgOaWsFBNSe+8m+WQjOaXpeS4ukHogqEyMDI25bm05Y2K5bm05oql5oqr6Zyy5oiq5q2i5pe254K544CCPC90ZD48dGQ+MDk6MzDliY3nmoTlvIDnm5jkuqTmmJPlrZjlnKjkv6Hmga/kuI3lrozmlbTvvJvliLbpgKDjgIHpobrlkajmnJ/lkozkuK3muLjorr7lpIflupTnrYnlvoXnlJ/kuqfjgIHmlrDorqLljZXjgIHku7fmoLznrYnliIbpobnvvIzogIzpnZ7lj6rnnIvmgLvmjIfmlbDjgII8L3RkPjx0ZD4wODowMOWFiOe7meaDheaZr++8jOS4jeaKiuacquWFrOW4g+aVsOaNruWGmeaIkOS6i+Wunu+8mzA5OjQw6YeH5qC35ZCO5YaN56Gu6K6k44CCPC90ZD48L3RyPgo8dHI+PHRkPue+juiBlOWCqOS4u+W4rVdhcnNo5by66LCD6YCa6IOA6aOO6Zmp77yM5biC5Zy65o+Q6auY5Yqg5oGv5oq85rOo77yb576O5Zu9MuW5tOS4jjEw5bm05Zu95YC65pS255uK546H5LiK5Y2H77yM57qz5oyH5ZGo5LqU5LiL6LeM57qmMC41JeOAgjwvdGQ+PHRkPumVv+S5heacn+OAgemrmOS8sOWAvOaIkOmVv+aJv+WOi+amgueOh+S4iuWNh++8m+mTtuihjOOAgeeOsOmHkea1geeos+WumuWFrOWPuOebuOWvueWNoOS8mO+8jOS9huS4jeaEj+WRs+edgOWug+S7rOW/heeEtuS4iua2qOOAgjwvdGQ+PHRkPueci+S6uuawkeW4geOAgeWMl+WQkeebuOWFs+mjjumZqeWBj+WlveOAgUHogqHmiJDplb8v5Lu35YC855u45a+55by65byx44CCPC90ZD48L3RyPgo8dHI+PHRkPuayueS7t+WRqOW6pui9rOW8seOAgem7hOmHkeaYjuaYvuWbnuiQve+8jOe+juWFg+i1sOW8uuOAgjwvdGQ+PHRkPuWMluW3peaIkOacrOS4jui1hOa6kOWTgeWIqea2pueahOW9seWTjeaWueWQkeW5tuS4jee7n+S4gO+8m+W/hemhu+e7k+WQiOS6p+WTgeS7t+W3ru+8jOS4jeiDveaKiuayueS7t+a2qOi3jOebtOaOpeetieWQjOS6juWMluW3peiCoea2qOi3jOOAgjwvdGQ+PHRkPuaguOmqjOWOn+ayueOAgemTnOOAgem7hOmHkeWPiuWvueW6lEHogqHmnb/lnZfmmK/lkKblkIzlkJHjgII8L3RkPjwvdHI+Cjx0cj48dGQ+OeaciOWInei/mOWwhuWFrOW4g+e+juiBlOWCqOikkOearuS5pu+8jOW5tuacieWkmumhueWbveWGheihjOS4muaWsOinhOS4juS6p+S4mua0u+WKqOOAgjwvdGQ+PHRkPuacrOWRqOWPr+iDveWRiOeOsOaVsOaNrumpseWKqOS4juadv+Wdl+i9ruWKqO+8jOWNleS4gOS4u+mimOi/nue7reS6lOWkqeWNoOS8mOeahOaKiuaPoeS4jemrmOOAgjwvdGQ+PHRkPjMw6IKh5oyJ6LaL5Yq/44CB5L2O5L2N5L+u5aSN44CB5LqL5Lu26amx5Yqo5LiJ57uE5YiG5pWj77yM6ICM6Z2e5oq85rOo5LiA5Liq6LWb6YGT44CCPC90ZD48L3RyPjwvdGFibGU+Cgo8aDI+5LiJ44CB5piO5pel5omn6KGM57qq5b6LPC9oMj4KPG9sPjxsaT4wODowMOiBlOe9keWGu+e7k+aBsOWlvTMw5Y+q6aKE5rWL5qC35pys77ya6LaL5Yq/5bu257utMTDjgIHkvY7kvY3kv67lpI0xMOOAgeS6i+S7tumpseWKqDEw44CCPC9saT48bGk+5YmU6ZmkU1TjgIHmrKHmlrDjgIHkvY7mtYHliqjmgKfjgIHlsI/luILlgLzpq5jms6Lliqjlj4rotKLmiqXml6Dms5XmoLjpqoznmoTlhazlj7jjgII8L2xpPjxsaT4wOToyMOacrOacuuebkeaOp+WQr+WKqO+8mzA5OjMw4oCUMTU6MDDlhbEyNuS4quWNgeWIhumSn+mHh+agt+eCueOAgjwvbGk+PGxpPjA5OjMw5Y+q6K6w5b2VUE1J5LiO5byA55uY5Y+N5bqU77yM5LiN5Zyo6aaW5Liq6YeH5qC354K56L+96auY44CCPC9saT48bGk+55yf5q2j5qih5ouf5Lmw5YWlMOKAlDPlj6rkuLrluLjmgIHvvIzmnaHku7bkuI3otrPliJnpm7bkuqTmmJPvvJvlhajpg6jmiJDkuqTlv4Xpobvkvb/nlKjop6blj5HlkI7nmoTkuIvkuIDph4fmoLfku7flubborqHotLnjgII8L2xpPjxsaT4xODowMOaMieaWueWQkeOAgei2hemineWSjOWPr+S6pOaYk+S4ieenjeWPo+W+hOivhOWIhu+8jOS4jeWIoOmUmemimOOAgjwvbGk+PC9vbD4KCjxoMj7lm5vjgIHns7vnu5/otZvliY3mo4Dmn6U8L2gyPgo8dGFibGU+PHRyPjx0aD7pobnnm648L3RoPjx0aD7nu5Pmnpw8L3RoPjwvdHI+Cjx0cj48dGQ+V2luZG93c+iuoeWIkuS7u+WKoTwvdGQ+PHRkIGNsYXNzPSJvayI+UmVhZHnvvJvkuIvkuIDmrKHov5DooYwyMDI2LTA4LTMxIDA5OjIw5bem5Y+z77yb5LiK5qyh5rWL6K+V6L+U5ZueMOOAgjwvdGQ+PC90cj4KPHRyPjx0ZD7ooYzmg4XkuI7mlbDmja7lupM8L3RkPjx0ZCBjbGFzcz0ib2siPuiFvuiur+S4u+a6kOOAgeWkh+eUqOino+aekOOAgTMw6IKh5om56YeP6YeH5qC344CBU1FMaXRl5LiOQ1NW5a+85Ye65Luj56CB5bey6YCa6L+H5rWL6K+V44CCPC90ZD48L3RyPgo8dHI+PHRkPuaYjuaXpTMw6IKhd2F0Y2hsaXN0PC90ZD48dGQ+5bCa5pyq55Sf5oiQ77yM56ym5ZCI6KeE5YiZ77yb5b+F6aG755Sx5piO5pepMDg6MDDnoJTnqbblkI7opobnm5blubbpgJrov4figJzml6XmnJ895b2T5aSp44CB5oGw5aW9MzDlj6rjgIHku6PnoIHllK/kuIDigJ3moKHpqozjgII8L3RkPjwvdHI+Cjx0cj48dGQ+R2l0SHViL1FR5oql5ZGK6YKu5Lu2PC90ZD48dGQgY2xhc3M9Im9rIj7ml6LmnIlHaXRIdWIgU2VjcmV0c+WPkemAgemTvui3r+WPr+eUqO+8jOS7iuaZmuaKpeWRiumAmui/h+ivpemTvui3r+WPkemAgeOAgjwvdGQ+PC90cj4KPHRyPjx0ZD7mnKzmnLrnm5jkuK3ljbPml7bpgq7ku7Y8L3RkPjx0ZCBjbGFzcz0iYmFkIj7lsJrmnKrlrozmiJDmnKzmnLpEUEFQSeWHreaNruWIneWni+WMluOAguacqui+k+WFpeaOiOadg+eggeWJje+8jOebmOS4reS/oeWPt+S7jeS8muWGmeWFpeaVsOaNruW6k++8jOS9huacrOacuuS4jeiDveebtOaOpeWPkemAgeWNs+aXtumCruS7tuOAgjwvdGQ+PC90cj48L3RhYmxlPgoKPGgyPuS6lOOAgeS6i+Wunui+ueeVjOS4juadpea6kDwvaDI+Cjx1bD48bGk+PGEgaHJlZj0iaHR0cHM6Ly9mdW5kLmVhc3Rtb25leS5jb20vYS8yMDI2MDgzMDM4NTkzNTk3MTAuaHRtbCI+5Lit5Zu96K+B5Yi45oqlL+S4nOaWuei0ouWvjO+8muS4i+WRqOi0oue7j+aXpeWOhuWPijjmnIgzMeaXpVBNSTwvYT48L2xpPjxsaT48YSBocmVmPSJodHRwczovL3d3dy5zdGF0cy5nb3YuY24vc2ovenhmYi8yMDI1MDgvdDIwMjUwODMxXzE5NjA5MzcuaHRtbCI+5Zu95a6257uf6K6h5bGA77yaUE1J5oyH5qCH6K+05piO5LiO5Y6G5Y+y5Y+R5biD5Y+j5b6EPC9hPjwvbGk+PGxpPjxhIGhyZWY9Imh0dHBzOi8vYXBuZXdzLmNvbS9hcnRpY2xlLzBhNjU1ZjFjMDQyYjA1OTI3OTM0MzQ0M2Q1ODAyOTA3Ij5BUO+8mldhcnNo6K6y6K+d5ZCO576O5YC65LiO6IKh5biC5Y+N5bqUPC9hPjwvbGk+PGxpPjxhIGhyZWY9Imh0dHBzOi8vd3d3LmludmVzdGluZy5jb20vbmV3cy9lY29ub215LW5ld3Mvc3RvY2tzLWZhbGwtd2hpbGUtZG9sbGFyLWJvbmQteWllbGRzLXJpc2UtYXMtd2Fyc2gtcHJvbXB0cy1yYXRlLWhpa2UtYmV0cy00ODgxOTM5Ij5SZXV0ZXJz6L2s6L2977ya576O5YWD44CB576O5YC644CB6buE6YeR5LiO5Y6f5rK55Y+N5bqUPC9hPjwvbGk+PC91bD4KPHAgY2xhc3M9InNtYWxsIj7mmI7ml6VQTUnmlbDlgLzjgIHpmpTlpJzmlrDlop7mtojmga/lkowwODowMOS5i+WQjuWFrOWRiuW9k+WJjeS7jeacquefpe+8m+acrOaKpeWRiuWPque7meWHuuaDheaZr+WSjOajgOafpea4heWNleOAgueUqOS6juWtpuS5oOWSjOmdnuWunuebmOaooeaLn++8jOS4jeaehOaIkOaMgeeJjOaKlei1hOW7uuiuru+8jOS4jeaJv+ivuuaUtuebiuaIljYwJeiDnOeOh+OAgjwvcD4KPC9kaXY+PC9ib2R5PjwvaHRtbD4K
+    steps:
+      - name: Send QQ SMTP report with retry
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64, os, smtplib, time
+          from email.message import EmailMessage
+          html = base64.b64decode(os.environ["REPORT_B64"])
+          sender = os.environ["EMAIL_SENDER"].strip()
+          password = os.environ["EMAIL_PASSWORD"].strip()
+          receivers = [x.strip() for x in os.environ["EMAIL_RECEIVERS"].replace(";", ",").split(",") if x.strip()]
+          if not receivers: raise RuntimeError("EMAIL_RECEIVERS is empty")
+          msg = EmailMessage()
+          msg["Subject"] = "2026-08-30 18:00 A股新游戏赛前复盘｜明早先看PMI"
+          msg["From"] = sender
+          msg["To"] = ", ".join(receivers)
+          msg.set_content("请使用支持HTML的邮件客户端查看赛前资讯复盘。")
+          msg.add_alternative(html.decode("utf-8"), subtype="html")
+          msg.add_attachment(html, maintype="text", subtype="html", filename="2026-08-30_18点新游戏赛前资讯复盘.html")
+          errors=[]
+          for attempt in range(1,5):
+              try:
+                  if attempt % 2:
+                      with smtplib.SMTP_SSL("smtp.qq.com",465,timeout=25) as s:
+                          s.login(sender,password); s.send_message(msg)
+                  else:
+                      with smtplib.SMTP("smtp.qq.com",587,timeout=25) as s:
+                          s.ehlo(); s.starttls(); s.ehlo(); s.login(sender,password); s.send_message(msg)
+                  print("sent",attempt); break
+              except Exception as exc:
+                  errors.append(f"{type(exc).__name__}: {exc}")
+                  if attempt<4: time.sleep(5*attempt)
+          else: raise RuntimeError("all SMTP attempts failed: "+" | ".join(errors))
+          PY
