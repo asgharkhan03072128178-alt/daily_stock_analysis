@@ -1,0 +1,44 @@
+name: Send 2026-09-25 holiday correction review
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'daily_reports/2026-09-25_18点休市纠错复盘.html'
+      - '.github/workflows/send-report-2026-09-25-pm.yml'
+permissions:
+  contents: read
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send QQ SMTP correction report
+        shell: bash
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
+        run: |
+          python - <<'PY'
+          import os,smtplib,time
+          from email.message import EmailMessage
+          path="daily_reports/2026-09-25_18点休市纠错复盘.html"; html=open(path,"rb").read()
+          sender=os.environ["EMAIL_SENDER"].strip(); password=os.environ["EMAIL_PASSWORD"].strip(); receivers=[x.strip() for x in os.environ["EMAIL_RECEIVERS"].replace(";",",").split(",") if x.strip()]
+          if not sender or not password or not receivers: raise RuntimeError("email secrets are incomplete")
+          msg=EmailMessage(); msg["Subject"]="重要纠错：9月25日A股休市，早报30股不计分不交易"; msg["From"]=sender; msg["To"] = ", ".join(receivers)
+          msg.set_content("今天A股休市。请以本纠错报告替代早间交易榜单。")
+          msg.add_alternative(html.decode("utf-8"),subtype="html"); msg.add_attachment(html,maintype="text",subtype="html",filename="2026-09-25_18点休市纠错复盘.html")
+          errors=[]
+          for attempt in range(1,5):
+              try:
+                  if attempt%2:
+                      with smtplib.SMTP_SSL("smtp.qq.com",465,timeout=25) as smtp: smtp.login(sender,password); smtp.send_message(msg)
+                  else:
+                      with smtplib.SMTP("smtp.qq.com",587,timeout=25) as smtp: smtp.ehlo(); smtp.starttls(); smtp.ehlo(); smtp.login(sender,password); smtp.send_message(msg)
+                  print("sent",attempt); break
+              except Exception as exc:
+                  errors.append(f"{type(exc).__name__}: {exc}")
+                  if attempt<4: time.sleep(5*attempt)
+          else: raise RuntimeError("all SMTP attempts failed: "+" | ".join(errors))
+          PY
