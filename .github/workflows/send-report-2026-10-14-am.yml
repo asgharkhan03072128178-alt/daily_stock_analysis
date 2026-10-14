@@ -24,7 +24,7 @@ jobs:
           path='daily_reports/2026-10-14_08点A股盘前预测.html'; html=open(path,'rb').read()
           sender=os.environ['EMAIL_SENDER'].strip(); password=os.environ['EMAIL_PASSWORD'].strip(); receivers=[x.strip() for x in os.environ['EMAIL_RECEIVERS'].replace(';',',').split(',') if x.strip()]
           if not sender or not password or not receivers: raise RuntimeError('email secrets are incomplete')
-          msg=EmailMessage(); msg['Subject']='2026-10-14 A股盘前：30股方向预测与全球利率传导'; msg['From']=sender; msg['To']=', '.join(receivers)
+          msg=EmailMessage(); msg['Subject']='更正研究时间｜2026-10-14 A股盘前：30股方向预测与全球利率传导'; msg['From']=sender; msg['To']=', '.join(receivers)
           msg.set_content('2026年10月14日A股30股研究预测及全球利率传导；今日冻结买入计划0笔。')
           msg.add_alternative(html.decode('utf-8'),subtype='html'); msg.add_attachment(html,maintype='text',subtype='html',filename='2026-10-14_08点A股盘前预测.html')
           errors=[]
