@@ -1,5 +1,6 @@
 name: Send 2026-10-15 A-share morning research
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'daily_reports/2026-10-15_08点A股盘前预测.html'
