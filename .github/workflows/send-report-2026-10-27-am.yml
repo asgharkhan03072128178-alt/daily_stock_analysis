@@ -1,0 +1,45 @@
+name: Send 2026-10-27 A-share morning research
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'daily_reports/2026-10-27_08点A股盘前预测.html'
+      - '.github/workflows/send-report-2026-10-27-am.yml'
+permissions:
+  contents: read
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send QQ SMTP research email
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
+        run: |
+          python - <<'PY'
+          import os
+          import smtplib
+          from email.message import EmailMessage
+
+          path = 'daily_reports/2026-10-27_08点A股盘前预测.html'
+          html = open(path, encoding='utf-8').read()
+          sender = os.environ['EMAIL_SENDER'].strip()
+          password = os.environ['EMAIL_PASSWORD'].strip()
+          recipients = [x.strip() for x in os.environ['EMAIL_RECEIVERS'].replace(';', ',').split(',') if x.strip()]
+          if not (sender and password and recipients):
+              raise RuntimeError('QQ SMTP secrets incomplete')
+          message = EmailMessage()
+          message['Subject'] = '2026-10-27 A股预测学习游戏盘前研究：30只仅研究，模拟新买入0只'
+          message['From'] = sender
+          message['To'] = ', '.join(recipients)
+          message.set_content('10月27日盘前研究。30只为研究样本，模拟新买入0只，不构成投资建议。')
+          message.add_alternative(html, subtype='html')
+          message.add_attachment(html.encode('utf-8'), maintype='text', subtype='html', filename='2026-10-27_08点A股盘前预测.html')
+          with smtplib.SMTP_SSL('smtp.qq.com', 465, timeout=30) as smtp:
+              smtp.login(sender, password)
+              smtp.send_message(message)
+          print('QQ SMTP send succeeded')
+          PY
