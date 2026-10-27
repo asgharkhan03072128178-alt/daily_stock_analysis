@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>2026-10-27 A股预测学习游戏复盘</title><style>body{font:14px/1.6 Arial,'Microsoft YaHei',sans-serif;color:#18253a;max-width:1220px;margin:24px auto;padding:0 18px}h1,h2{color:#17365a}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #ccd5df;padding:5px;vertical-align:top}th{background:#e9f0f7}.warn{color:#a34415}small{color:#64748b}</style></head><body>
 <h1>2026-10-27 18:00｜A股预测学习游戏复盘</h1>
 <p><b>研究与数据截止：</b>北京时间10月27日18:45前后；A股10月27日收盘、盘中26个计划时点。以下区分可核验事实、模型判断和缺口；研究及模拟，不连接证券账户，不承诺盈利；旧账户、旧持仓和510300等历史交易绝不继承。</p>
-<p class="warn"><b>送达与可交易性闸门：</b>早报已推送仓库，但GitHub工作流手动触发返回HTTP 422“Actions has been disabled for this repository”，运行数0，QQ邮件未证实发送。早报又明确全A分页及逐股公告筛查不完整，模拟新开计划0项；即使盘中提醒触发，今天仍为0模拟新买入，未补造成交。晚报邮件同样必须有本次Actions status=completed且conclusion=success才算送达。</p>
+<p class="warn"><b>送达与可交易性闸门：</b>早报已推送仓库，但GitHub工作流手动触发返回HTTP 422“Actions has been disabled for this repository”，运行数0，QQ邮件未证实发送。晚报已推送仓库，本次工作流手动触发同样返回HTTP 422、运行数0，QQ邮件亦未证实发送；不能把GitHub文件存在当作邮件送达。早报又明确全A分页及逐股公告筛查不完整，模拟新开计划0项；即使盘中提醒触发，今天仍为0模拟新买入，未补造成交。只有本次Actions status=completed且conclusion=success才算送达。</p>
 <h2>市场事实及价格核验</h2>
 <p>上证3648.30（-1.33%）、深成指11245.73（-2.50%）、创业板2548.15（-3.41%）、沪深300约4049.55（-1.3157%）。沪深两市成交约14609.58亿元，较前日缩量约1478.35亿元；沪深京三市约1.47万亿元，两个口径不能混用。界面新闻口径全市场606只上涨、4922只下跌、42只涨停、23只跌停。银行、核电与零售相对强，半导体、软件、航天装备及生物制品承压。30只样本、沪深300与5只既有模拟持仓终盘价由腾讯和新浪双源核对一致；15:00采样价与终盘价30/30一致。</p>
 <p><b>采样审计：</b>09:30—11:30十三点、13:00—15:00十三点，共26/26时点；每点30只，780/780条，缺失率0%；SQLite与CSV一致，全部腾讯源。基准沪深300涨跌幅嵌入每条记录，数据库没有独立指数价格行，终盘指数4049.5516点另经双源核验。提醒18条：预测验证6、预测失败7、失效3、十分钟异常波动2；全部为queued_no_credential，未证实送达，不是18笔交易信号。神州数码虽为新账户历史持仓但不在今日30股，缺其10分钟轨迹，仅按双源收盘价估值，不能倒推卖点。</p>
