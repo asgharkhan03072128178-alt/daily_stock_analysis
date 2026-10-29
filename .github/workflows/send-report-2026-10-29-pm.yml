@@ -1,0 +1,38 @@
+name: Send 2026-10-29 A-share close review
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'daily_reports/2026-10-29_18点A股收盘复盘.html'
+      - '.github/workflows/send-report-2026-10-29-pm.yml'
+permissions:
+  contents: read
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send QQ SMTP closing review
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
+        run: |
+          python - <<'PY'
+          import os, smtplib
+          from email.message import EmailMessage
+          path='daily_reports/2026-10-29_18点A股收盘复盘.html'
+          html=open(path,encoding='utf-8').read()
+          sender=os.environ['EMAIL_SENDER'].strip(); password=os.environ['EMAIL_PASSWORD'].strip()
+          recipients=[x.strip() for x in os.environ['EMAIL_RECEIVERS'].replace(';',',').split(',') if x.strip()]
+          if not (sender and password and recipients): raise RuntimeError('QQ SMTP secrets incomplete')
+          msg=EmailMessage(); msg['Subject']='2026-10-29 A股预测学习游戏18点收盘复盘：样本评估与模拟账本'
+          msg['From']=sender; msg['To']=', '.join(recipients)
+          msg.set_content('附件为2026-10-29 A股收盘复盘HTML。今日模拟新开0只；完整行情口径、样本命中和数据缺口见报告。')
+          msg.add_alternative(html,subtype='html')
+          msg.add_attachment(html.encode('utf-8'),maintype='text',subtype='html',filename='2026-10-29_18点A股收盘复盘.html')
+          with smtplib.SMTP_SSL('smtp.qq.com',465,timeout=30) as smtp:
+              smtp.login(sender,password); smtp.send_message(msg)
+          print('QQ SMTP send succeeded')
+          PY
